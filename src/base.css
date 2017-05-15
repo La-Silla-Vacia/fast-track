@@ -12,6 +12,10 @@
   border-radius: 50%;
 }
 
+.svg {
+  overflow: visible !important;
+}
+
 [partido="Liberal"] {
   fill: map(colors, partidos, liberal)
 }

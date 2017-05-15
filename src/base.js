@@ -124,7 +124,7 @@ export default class Base extends Component {
     const balloon = this.getBalloon();
     return (
       <div className={s.container}>
-        <svg viewBox="0 0 360 185">
+        <svg viewBox="0 0 360 185" className={s.svg}>
           <g>
             {names}
           </g>
