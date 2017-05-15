@@ -1,6 +1,8 @@
-import { h, render, Component } from 'preact';
+import {h, render, Component} from 'preact';
+import cx from 'classnames';
 
 import s from './base.css';
+import seating from './paliament_seeting.json';
 const data = require('../data/data.json');
 
 export default class Base extends Component {
@@ -9,8 +11,15 @@ export default class Base extends Component {
     super();
 
     this.state = {
-      data: []
-    }
+      data: [],
+      balloon: {
+        text: false,
+        x: false,
+        y: false
+      }
+    };
+
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   componentWillMount() {
@@ -22,9 +31,9 @@ export default class Base extends Component {
     let interactiveData;
     let dataUri;
     try {
-      if (fast-track_data) {
+      if (fast_track_data) {
         dataExists = true;
-        interactiveData = fast-track_data;
+        interactiveData = fast_track_data;
       }
     } catch (e) {
       dataExists = false;
@@ -43,18 +52,76 @@ export default class Base extends Component {
   fetchData(uri) {
     fetch(uri)
       .then((response) => {
-        return response.json()
-    }).then((json) => {
-      this.setState({ data: json });
+        console.log(response.json);
+        return response.json();
+      }).then((json) => {
+      this.setState({data: json});
     }).catch((ex) => {
       console.log('parsing failed', ex)
     })
   }
 
+  handleMouseEnter(text, e) {
+    this.setState({balloon: {
+      text,
+      x: e.layerX,
+      y: e.layerY
+    }});
+  }
+
+  handleMouseLeave() {
+    this.setState({balloon: {
+      text: false,
+      x: false,
+      y: false
+    }})
+  }
+
+  getNames() {
+    return this.state.data.map((person, index) => {
+      const seat = seating[index];
+      if (!seat) {
+        console.log(person);
+        return;
+      }
+      return (
+        <circle
+          cx={seat.cx}
+          cy={seat.cy}
+          classID={s.circle}
+          onMouseEnter={this.handleMouseEnter.bind(this, person.senador)}
+          onMouseLeave={this.handleMouseLeave}
+          partido={person.partido}
+          r="6.67"
+        />
+      )
+    });
+  }
+
+  getBalloon() {
+    const {balloon} = this.state;
+    const {text, x, y} = balloon;
+
+    if (text) {
+      const style = {
+        left: x,
+        top: y
+      };
+      return (
+        <div className={s.balloon} style={style}>{text}</div>
+      )
+    }
+  }
+
   render(props, state) {
-    return(
+    const names = this.getNames();
+    const balloon = this.getBalloon();
+    return (
       <div className={s.container}>
-        Hello fast-track!
+        <svg viewBox="0 0 360 185">
+          {names}
+        </svg>
+        {balloon}
       </div>
     )
   }
