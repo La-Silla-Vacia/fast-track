@@ -53,7 +53,7 @@
 }
 
 .balloon {
-  position: absolute;
+  position: absolute !important;
   background: red;
   transform: translate(-50%, 0)
 }

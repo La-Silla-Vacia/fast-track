@@ -84,10 +84,11 @@ export default class Base extends Component {
         console.log(person);
         return;
       }
+      const {cx, cy} = seat;
       return (
         <circle
-          cx={seat.cx}
-          cy={seat.cy}
+          cx={cx}
+          cy={cy}
           classID={s.circle}
           onMouseEnter={this.handleMouseEnter.bind(this, person.senador)}
           onMouseLeave={this.handleMouseLeave}
@@ -108,7 +109,7 @@ export default class Base extends Component {
         top: y
       };
       return (
-        <div className={s.balloon} style={style}>{text}</div>
+        <div className={s.balloon} data-balloon-visible="true" data-balloon={text} data-balloon-pos="down" style={style} />
       )
     }
   }
