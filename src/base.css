@@ -6,54 +6,65 @@
 }
 
 .circle {
-  width: 3.5em;
-  height: 3.5em;
-  background-color: map(colors, primary, base);
-  border-radius: 50%;
+  transition: .4s;
+
+  &[partido="Liberal"] {
+    fill: map(colors, partidos, liberal)
+  }
+
+  &[partido="La U"] {
+    fill: map(colors, partidos, laU)
+  }
+
+  &[partido="Conservador"] {
+    fill: map(colors, partidos, conservador)
+  }
+
+  &[partido="ASI"] {
+    fill: map(colors, partidos, asi)
+  }
+
+  &[partido="Partido Verde"] {
+    fill: map(colors, partidos, alianzaVerde)
+  }
+
+  &[partido="Cambio Radical"] {
+    fill: map(colors, partidos, cambioRadical)
+  }
+
+  &[partido="Mais"] {
+    fill: map(colors, partidos, mais)
+  }
+
+  &[partido="Antiguo PIN"] {
+    fill: map(colors, partidos, opcionCiudadana)
+  }
+
+  &[partido="Polo"] {
+    fill: map(colors, partidos, polo)
+  }
+
+  &[partido="Centro Democrático"] {
+    fill: map(colors, partidos, centroDemocratico)
+  }
+
+  &.Sí,
+  &.No {
+    stroke: green;
+    stroke-width: 2px;
+  }
+
+  &.No {
+    stroke: red;
+  }
+
+  &.Noestaba {
+    opacity: .15;
+  }
 }
 
 .svg {
   overflow: visible !important;
-}
-
-[partido="Liberal"] {
-  fill: map(colors, partidos, liberal)
-}
-
-[partido="La U"] {
-  fill: map(colors, partidos, laU)
-}
-
-[partido="Conservador"] {
-  fill: map(colors, partidos, conservador)
-}
-
-[partido="ASI"] {
-  fill: map(colors, partidos, asi)
-}
-
-[partido="Partido Verde"] {
-  fill: map(colors, partidos, alianzaVerde)
-}
-
-[partido="Cambio Radical"] {
-  fill: map(colors, partidos, cambioRadical)
-}
-
-[partido="Mais"] {
-  fill: map(colors, partidos, mais)
-}
-
-[partido="Antiguo PIN"] {
-  fill: map(colors, partidos, opcionCiudadana)
-}
-
-[partido="Polo"] {
-  fill: map(colors, partidos, polo)
-}
-
-[partido="Centro Democrático"] {
-  fill: map(colors, partidos, centroDemocratico)
 }
 
 .balloon {
@@ -73,4 +84,11 @@
     font-size: 5px;
   }
 
+}
+
+.icon {
+  fill: white;
+  stroke: black;
+  stroke-width: 0.5px;
+  pointer-events: none;
 }
