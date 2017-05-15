@@ -1,4 +1,4 @@
-import {h, render, Component} from 'preact';
+import { h, render, Component } from 'preact';
 import cx from 'classnames';
 
 import s from './base.css';
@@ -40,7 +40,7 @@ export default class Base extends Component {
     }
 
     if (!dataExists) {
-      this.setState({data: data});
+      this.setState({ data: data });
     } else {
       if (interactiveData.dataUri) {
         dataUri = interactiveData.dataUri;
@@ -55,26 +55,29 @@ export default class Base extends Component {
         console.log(response.json);
         return response.json();
       }).then((json) => {
-      this.setState({data: json});
+      this.setState({ data: json });
     }).catch((ex) => {
       console.log('parsing failed', ex)
     })
   }
 
-  handleMouseEnter(text, e) {
-    this.setState({balloon: {
-      text,
-      x: e.layerX,
-      y: e.layerY
-    }});
+  handleMouseEnter(text, x, y) {
+    this.setState({
+      balloon: {
+        text,
+        x,
+        y
+      }
+    });
   }
 
   handleMouseLeave() {
-    this.setState({balloon: {
-      text: false,
-      x: false,
-      y: false
-    }})
+    const { x, y } = this.state.balloon;
+    this.setState({
+      balloon: {
+        text: false, x, y
+      }
+    })
   }
 
   getNames() {
@@ -84,13 +87,13 @@ export default class Base extends Component {
         console.log(person);
         return;
       }
-      const {cx, cy} = seat;
+      const { cx, cy } = seat;
       return (
         <circle
           cx={cx}
           cy={cy}
           classID={s.circle}
-          onMouseEnter={this.handleMouseEnter.bind(this, person.senador)}
+          onMouseEnter={this.handleMouseEnter.bind(this, person.senador, cx, cy)}
           onMouseLeave={this.handleMouseLeave}
           partido={person.partido}
           r="6.67"
@@ -100,18 +103,20 @@ export default class Base extends Component {
   }
 
   getBalloon() {
-    const {balloon} = this.state;
-    const {text, x, y} = balloon;
+    const { balloon } = this.state;
+    const { text, x, y } = balloon;
 
-    if (text) {
-      const style = {
-        left: x,
-        top: y
-      };
-      return (
-        <div className={s.balloon} data-balloon-visible="true" data-balloon={text} data-balloon-pos="down" style={style} />
-      )
-    }
+    const hidden = (!text);
+
+    return (
+      <g className={cx(s.balloon, { [s.balloon__hidden]: hidden })} transform={`translate(${x}, ${y})`}>
+        <g className={s.balloon__inner} transform="translate(0%, -8px);">
+          <rect className={s.balloon__rect} width="75" height="13" rx="2" />
+          <text className={s.balloon__text} x="5" y="8">{text}</text>
+        </g>
+      </g>
+    )
+    // }
   }
 
   render(props, state) {
@@ -120,9 +125,11 @@ export default class Base extends Component {
     return (
       <div className={s.container}>
         <svg viewBox="0 0 360 185">
-          {names}
+          <g>
+            {names}
+          </g>
+          {balloon}
         </svg>
-        {balloon}
       </div>
     )
   }
