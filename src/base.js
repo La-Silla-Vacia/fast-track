@@ -70,6 +70,7 @@ export default class Base extends Component {
 
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInputClick = this.handleInputClick.bind(this);
   }
 
   componentWillMount() {
@@ -137,6 +138,15 @@ export default class Base extends Component {
     })
   }
 
+  handleClick(text, x, y) {
+    const balloon = this.state.balloon;
+    if (text === balloon.text) {
+      this.handleMouseLeave();
+    } else {
+      this.handleMouseEnter(text, x, y);
+    }
+  }
+
   handleMouseEnter(text, x, y) {
     this.setState({
       balloon: {
@@ -172,6 +182,7 @@ export default class Base extends Component {
         <g transform={`translate(${x}, ${y})`}>
           <circle
             className={cx(s.circle, s[siONo.replace(/\s/g, '')])}
+            onClick={this.handleClick.bind(this, person.senador, x, y)}
             onMouseEnter={this.handleMouseEnter.bind(this, person.senador, x, y)}
             onMouseLeave={this.handleMouseLeave}
             partido={person.partido}
@@ -216,6 +227,12 @@ export default class Base extends Component {
         <li partido={partido}><span className={cx(s.circle, s.partido)} partido={partido} /> {partido}</li>
       )
     });
+  }
+
+  handleInputClick(e) {
+    e.preventDefault();
+    const pos = Math.round((e.target.max / e.target.offsetWidth) * e.offsetX );
+    this.setState({moment: Math.abs(pos)});
   }
 
   render(props, state) {
@@ -265,6 +282,7 @@ export default class Base extends Component {
               type="range"
               min="0" max="6"
               value={moment}
+              onClick={this.handleInputClick}
               onChange={this.handleInputChange}
             />
             <div className={s.overlay}>
@@ -278,7 +296,9 @@ export default class Base extends Component {
             </div>
           </div>
         </div>
-        <div className={s.instructions}>Instrucciones: Arrastre la bola a través de la línea de tiempo para mirar el comportamiento de cada senador.</div>
+        <div className={s.instructions}>Instrucciones: Arrastre la bola a través de la línea de tiempo para mirar el
+          comportamiento de cada senador.
+        </div>
         <div className={s.description}>
           <header className={s.description__header}>
             <h3>{momentDescription.title}</h3>
