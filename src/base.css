@@ -250,7 +250,7 @@
     align-items: center;
   }
 
-  & span {
+  & .legend__item {
     display: inline-block;
     width: 1em;
     height: 1em;
@@ -270,6 +270,24 @@
       border: 0;
       background-color: map(colors, primary, base);
       opacity: 0.15;
+    }
+  }
+
+  & .legend__result {
+    color: #fff;
+    padding: 0 0.5em;
+    margin-left: 0.5em;
+
+    &.Si {
+      background-color: #80DC17;
+    }
+
+    &.No {
+      background-color: #FF0000;
+    }
+
+    &.NoEstaba {
+      background-color: map(colors, primary, base);
     }
   }
 }

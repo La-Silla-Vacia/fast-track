@@ -20,48 +20,49 @@ export default class Base extends Component {
       moment: 0,
       moments: [
         'amnistia28_12_2016',
-        'vocesDePaz14_02_2017',
-        'blindaje21_02_2017',
-        'jEP13_03_2017',
-        'conciliacionJep22_03_2017',
-        'oposicion05_04_2017',
-        'partidoPoliticoFarc26_04_2017'
+        'voceriaAVocesDePaz14_02_2017',
+        'blindajeDelAcuerdo21_02_2017',
+        'justiciaEspecialParaLaPaz13_03_2017',
+        'conciliacionJEP22_03_2017',
+        'estatutoDeOposicion05_04_2017',
+        'partidoPoliticoDeFarc26_04_2017'
       ],
+      momentsResults: [],
       momentsData: [
         {
           "title": "Amnistía",
           "date": "28 12 2016",
-          "description": "<p>Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amet fermentum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Sed posuere consectetur est at lobortis.</p>"
+          "description": "<p>Permite tramitar las amnistías e indultos para los guerrilleros, y el tratamiento especial para los miembros de las fuerzas militares.</p>"
         },
         {
-          "title": "Voces de paz",
+          "title": "Vocería a Voces de paz",
           "date": "14 02 2017",
-          "description": "<p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras mattis consectetur purus sit amet fermentum. Nulla vitae elit libero, a pharetra augue. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus.</p>"
+          "description": "<p>Le da vocería en las sesiones y plenarias a los seis miembros de la organización, que representan los intereses a las Farc en el Congreso.</p>"
         },
         {
-          "title": "Blindaje",
+          "title": "Blindaje del Acuerdo",
           "date": "21 02 2017",
-          "description": "<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Donec id elit non mi porta gravida at eget metus. Donec id elit non mi porta gravida at eget metus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>"
+          "description": "<p>Obliga a los siguientes dos gobiernos a implementar el Acuerdo.</p>"
         },
         {
-          "title": "JEP",
+          "title": "Justicia Especial para la Paz",
           "date": "13 03 2017",
-          "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum id ligula porta felis euismod semper. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>"
+          "description": "<p>La Justicia Especial para la Paz (JEP) es el sistema de justicia transicional. Crea el tribunal de paz para juzgar guerrilleros, militares y civiles involucrados en el conflicto.</p>"
         },
         {
-          "title": "Conciliacion Jep",
+          "title": "Conciliación de la JEP",
           "date": "22 03 2017",
-          "description": "<p>Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus.</p>"
+          "description": "<p>Las diferencias en los textos de Senado y Cámara fueron votados en plenaria para que quedara una ley unificada.</p>"
         },
         {
-          "title": "Oposicion",
+          "title": "Estatuto de Oposición",
           "date": "05 04 2017",
-          "description": "<p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>"
+          "description": "<p>Dicta las pautas para garantizar el acceso a la democracia de los partidos que se declaren en oposición al gobierno de turno a nivel local, regional y nacional.</p>"
         },
         {
-          "title": "Partido Politico Farc",
+          "title": "Partido político de Farc",
           "date": "26 04 2017",
-          "description": "<p>Donec sed odio dui. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>"
+          "description": "<p>Consigna la creación, condiciones y beneficios de la organización política a la que llegarán las Farc cuando dejen las armas y da 10 curules en el Congreso por dos periodos a ese partido.</p>"
         }
       ]
     };
@@ -98,12 +99,35 @@ export default class Base extends Component {
   }
 
   fetchData(uri) {
+    const { moments } = this.state;
     fetch(uri)
       .then((response) => {
         console.log(response.json);
         return response.json();
       }).then((json) => {
-      this.setState({ data: json });
+      const momentsResults = [];
+      json.map((item) => {
+        moments.map((moment, index) => {
+          const itemMoment = item[moment];
+          if (!momentsResults[index]) {
+            momentsResults[index] = {
+              'si': 0,
+              'no': 0,
+              'noEstaba': 0,
+              'total': 0
+            }
+          }
+          if (itemMoment === 'Sí') {
+            momentsResults[index].si++;
+          } else if (itemMoment === 'No') {
+            momentsResults[index].no++;
+          } else if (itemMoment === 'No estaba') {
+            momentsResults[index].noEstaba++;
+          }
+          momentsResults[index].total++;
+        });
+      });
+      this.setState({ data: json, momentsResults });
     }).catch((ex) => {
       console.log('parsing failed', ex)
     })
@@ -138,6 +162,7 @@ export default class Base extends Component {
       }
       const currentMoment = moments[moment];
       const siONo = person[currentMoment];
+      if (!siONo) console.log(person, currentMoment);
       const { x, y } = seat;
       return (
         <g transform={`translate(${x}, ${y})`}>
@@ -184,8 +209,12 @@ export default class Base extends Component {
   }
 
   render(props, state) {
-    const { moment, momentsData } = state;
+    const { moment, momentsData, momentsResults } = state;
     const momentDescription = momentsData[moment];
+    const results = momentsResults[moment];
+    const si = (results) ? results.si : '',
+          no = (results) ? results.no : '',
+          noEstaba = (results) ? results.noEstaba : '';
 
     const names = this.getNames();
     const balloon = this.getBalloon();
@@ -200,13 +229,13 @@ export default class Base extends Component {
           <div>
             <ul className={s.legend}>
               <li>
-                <span className={s.Si} /> Voto a favor
+                <span className={cx(s.legend__item, s.Si)} /> Voto a favor <span className={cx(s.legend__result, s.Si)}>{si}</span>
               </li>
               <li>
-                <span className={s.No} /> Voto a contra
+                <span className={cx(s.legend__item, s.No)} /> Voto a contra <span className={cx(s.legend__result, s.No)}>{no}</span>
               </li>
               <li>
-                <span className={s.NoEstaba} /> No estaba
+                <span className={cx(s.legend__item, s.NoEstaba)} /> No estaba <span className={cx(s.legend__result, s.NoEstaba)}>{noEstaba}</span>
               </li>
             </ul>
           </div>
