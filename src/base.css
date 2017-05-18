@@ -289,57 +289,6 @@
   }
 }
 
-.legend {
-  list-style: none;
-  padding: 0;
-
-  & li {
-    display: flex;
-    align-items: center;
-  }
-
-  & .legend__item {
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    border-radius: 50%;
-    border: 2px solid;
-    margin-right: 0.5em;
-
-    &.Si {
-      border-color: #80DC17;
-    }
-
-    &.No {
-      border-color: #FF0000;
-    }
-
-    &.NoEstaba {
-      border: 0;
-      background-color: map(colors, primary, base);
-      opacity: 0.15;
-    }
-  }
-
-  & .legend__result {
-    color: #fff;
-    padding: 0 0.5em;
-    margin: 0.2em 0.5em;
-
-    &.Si {
-      background-color: #80DC17;
-    }
-
-    &.No {
-      background-color: #FF0000;
-    }
-
-    &.NoEstaba {
-      background-color: map(colors, primary, base);
-    }
-  }
-}
-
 .conventions {
   list-style: none;
   padding: 0;
