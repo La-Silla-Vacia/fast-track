@@ -213,8 +213,8 @@ export default class Base extends Component {
     const momentDescription = momentsData[moment];
     const results = momentsResults[moment];
     const si = (results) ? results.si : '',
-          no = (results) ? results.no : '',
-          noEstaba = (results) ? results.noEstaba : '';
+      no = (results) ? results.no : '',
+      noEstaba = (results) ? results.noEstaba : '';
 
     const names = this.getNames();
     const balloon = this.getBalloon();
@@ -229,13 +229,16 @@ export default class Base extends Component {
           <div>
             <ul className={s.legend}>
               <li>
-                <span className={cx(s.legend__item, s.Si)} /> Voto a favor <span className={cx(s.legend__result, s.Si)}>{si}</span>
+                <span className={cx(s.legend__item, s.Si)} /> Voto a favor <span
+                className={cx(s.legend__result, s.Si)}>{si}</span>
               </li>
               <li>
-                <span className={cx(s.legend__item, s.No)} /> Voto a contra <span className={cx(s.legend__result, s.No)}>{no}</span>
+                <span className={cx(s.legend__item, s.No)} /> Voto a contra <span
+                className={cx(s.legend__result, s.No)}>{no}</span>
               </li>
               <li>
-                <span className={cx(s.legend__item, s.NoEstaba)} /> No estaba <span className={cx(s.legend__result, s.NoEstaba)}>{noEstaba}</span>
+                <span className={cx(s.legend__item, s.NoEstaba)} /> No estaba <span
+                className={cx(s.legend__result, s.NoEstaba)}>{noEstaba}</span>
               </li>
             </ul>
           </div>
@@ -248,12 +251,23 @@ export default class Base extends Component {
             {balloon}
           </svg>
 
-          <input
-            type="range"
-            min="0" max="6"
-            value={moment}
-            onChange={this.handleInputChange}
-          />
+          <div className={s.rangeContainer}>
+            <input
+              type="range"
+              min="0" max="6"
+              value={moment}
+              onChange={this.handleInputChange}
+            />
+            <div className={s.overlay}>
+              <span className={s.point} />
+              <span className={s.point} />
+              <span className={s.point} />
+              <span className={s.point} />
+              <span className={s.point} />
+              <span className={s.point} />
+              <span className={s.point} />
+            </div>
+          </div>
         </div>
         <div className="clearfix" />
       </div>

@@ -145,100 +145,138 @@
   float: right;
 }
 
-[type='range'] {
-  -webkit-appearance: none;
-  margin: 15px 0;
-  width: 100%;
-}
+.rangeContainer {
+  position: relative;
 
-[type='range']:focus {
-  outline: 0;
-}
+  & .overlay {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
 
-[type='range']:focus::-webkit-slider-runnable-track {
-  background: map(colors, secondary, light);
-}
+  & .point {
+    width: 2em;
+    height: 12px;
+    display: block;
+    position: relative;
 
-[type='range']:focus::-ms-fill-lower {
-  background: map(colors, secondary, light);
-}
+    &::before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      display: block;
+      background-color: map(colors, secondary, base);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
 
-[type='range']:focus::-ms-fill-upper {
-  background: map(colors, secondary, light);
-}
+  & [type='range'] {
+    -webkit-appearance: none;
+    margin: 1em 0;
+    width: 100%;
+  }
 
-[type='range']::-webkit-slider-runnable-track {
-  cursor: pointer;
-  height: 12px;
-  -webkit-transition: all .2s ease;
-  transition: all .2s ease;
-  width: 100%;
-  background: map(colors, secondary, light);
-  border: 0 solid transparent;
-  border-radius: 5px;
-}
+  & [type='range']:focus {
+    outline: 0;
+  }
 
-[type='range']::-webkit-slider-thumb {
-  background: map(colors, primary, base);
-  border: 2px solid white;
-  border-radius: 30px;
-  cursor: pointer;
-  height: 30px;
-  width: 30px;
-  -webkit-appearance: none;
-  margin-top: -9px;
-}
+  & [type='range']:focus::-webkit-slider-runnable-track {
+    background: map(colors, secondary, light);
+  }
 
-[type='range']::-moz-range-track {
-  cursor: pointer;
-  height: 12px;
-  transition: all .2s ease;
-  width: 100%;
-  background: map(colors, secondary, light);
-  border: 0 solid transparent;
-  border-radius: 5px;
-}
+  & [type='range']:focus::-ms-fill-lower {
+    background: map(colors, secondary, light);
+  }
 
-[type='range']::-moz-range-thumb {
-  background: map(colors, primary, base);
-  border: 2px solid white;
-  border-radius: 30px;
-  cursor: pointer;
-  height: 30px;
-  width: 30px;
-}
+  & [type='range']:focus::-ms-fill-upper {
+    background: map(colors, secondary, light);
+  }
 
-[type='range']::-ms-track {
-  cursor: pointer;
-  height: 12px;
-  transition: all .2s ease;
-  width: 100%;
-  background: transparent;
-  border-color: transparent;
-  border-width: 15px 0;
-  color: transparent;
-}
+  & [type='range']::-webkit-slider-runnable-track {
+    cursor: pointer;
+    height: 12px;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+    width: 100%;
+    background: map(colors, secondary, light);
+    border: 0 solid transparent;
+    border-radius: 0.3em;
+  }
 
-[type='range']::-ms-fill-lower {
-  background: map(colors, secondary, light);
-  border: 0 solid transparent;
-  border-radius: 10px;
-}
+  & [type='range']::-webkit-slider-thumb {
+    background: map(colors, primary, base);
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 2em;
+    width: 2em;
+    -webkit-appearance: none;
+    margin-top: -9px;
+    z-index: 5;
+    position: relative;
+  }
 
-[type='range']::-ms-fill-upper {
-  background: map(colors, secondary, light);
-  border: 0 solid transparent;
-  border-radius: 10px;
-}
+  & [type='range']::-moz-range-track {
+    cursor: pointer;
+    height: 12px;
+    transition: all .2s ease;
+    width: 100%;
+    background: map(colors, secondary, light);
+    border: 0 solid transparent;
+    border-radius: 5px;
+  }
 
-[type='range']::-ms-thumb {
-  background: map(colors, primary, base);
-  border: 2px solid white;
-  border-radius: 30px;
-  cursor: pointer;
-  height: 30px;
-  width: 30px;
-  margin-top: 0;
+  & [type='range']::-moz-range-thumb {
+    background: map(colors, primary, base);
+    border: 2px solid white;
+    border-radius: 30px;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    z-index: 5;
+    position: relative;
+  }
+
+  & [type='range']::-ms-track {
+    cursor: pointer;
+    height: 12px;
+    transition: all .2s ease;
+    width: 100%;
+    background: transparent;
+    border-color: transparent;
+    border-width: 15px 0;
+    color: transparent;
+  }
+
+  & [type='range']::-ms-fill-lower {
+    background: map(colors, secondary, light);
+    border: 0 solid transparent;
+    border-radius: 10px;
+  }
+
+  & [type='range']::-ms-fill-upper {
+    background: map(colors, secondary, light);
+    border: 0 solid transparent;
+    border-radius: 10px;
+  }
+
+  & [type='range']::-ms-thumb {
+    background: map(colors, primary, base);
+    border: 2px solid white;
+    border-radius: 30px;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    margin-top: 0;
+    z-index: 5;
+    position: relative;
+  }
 }
 
 .legend {
@@ -276,7 +314,7 @@
   & .legend__result {
     color: #fff;
     padding: 0 0.5em;
-    margin-left: 0.5em;
+    margin: 0.2em 0.5em;
 
     &.Si {
       background-color: #80DC17;
