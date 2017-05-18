@@ -346,4 +346,6 @@
 .instructions {
   font-size: .8em;
   font-style: italic;
+  max-width: 48em;
+  margin: 0 auto;
 }
