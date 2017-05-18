@@ -31,37 +31,37 @@ export default class Base extends Component {
       momentsData: [
         {
           "title": "Amnistía",
-          "date": "28 12 2016",
+          "date": "28-12-2016",
           "description": "<p>Permite tramitar las amnistías e indultos para los guerrilleros, y el tratamiento especial para los miembros de las fuerzas militares.</p>"
         },
         {
           "title": "Vocería a Voces de paz",
-          "date": "14 02 2017",
+          "date": "14-02-2017",
           "description": "<p>Le da vocería en las sesiones y plenarias a los seis miembros de la organización, que representan los intereses a las Farc en el Congreso.</p>"
         },
         {
           "title": "Blindaje del Acuerdo",
-          "date": "21 02 2017",
+          "date": "21-02-2017",
           "description": "<p>Obliga a los siguientes dos gobiernos a implementar el Acuerdo.</p>"
         },
         {
           "title": "Justicia Especial para la Paz",
-          "date": "13 03 2017",
+          "date": "13-03-2017",
           "description": "<p>La Justicia Especial para la Paz (JEP) es el sistema de justicia transicional. Crea el tribunal de paz para juzgar guerrilleros, militares y civiles involucrados en el conflicto.</p>"
         },
         {
           "title": "Conciliación de la JEP",
-          "date": "22 03 2017",
+          "date": "22-03-2017",
           "description": "<p>Las diferencias en los textos de Senado y Cámara fueron votados en plenaria para que quedara una ley unificada.</p>"
         },
         {
           "title": "Estatuto de Oposición",
-          "date": "05 04 2017",
+          "date": "05-04-2017",
           "description": "<p>Dicta las pautas para garantizar el acceso a la democracia de los partidos que se declaren en oposición al gobierno de turno a nivel local, regional y nacional.</p>"
         },
         {
           "title": "Partido político de Farc",
-          "date": "26 04 2017",
+          "date": "26-04-2017",
           "description": "<p>Consigna la creación, condiciones y beneficios de la organización política a la que llegarán las Farc cuando dejen las armas y da 10 curules en el Congreso por dos periodos a ese partido.</p>"
         }
       ],
@@ -240,21 +240,21 @@ export default class Base extends Component {
             <g>
               {names}
             </g>
-            <g transform="translate(140, 145)">
+            <g className={s.legend}>
               <g>
                 <circle className={cx(s.circle, s['Sí'])} fill="#fff" r="4" />
-                <text font-size='9px' x="8" y="3">Voto a favor</text>
-                <text font-size='9px' font-weight="bold" x="70" y="4">{si}</text>
+                <text className={s.legendText} x="8" y="3">Voto a favor</text>
+                <text className={cx(s.legendText, s.legendNumber)} font-weight="bold" x="70" y="4">{si}</text>
               </g>
               <g transform="translate(0, 15)">
                 <circle className={cx(s.circle, s['No'])} fill="#fff" r="4" />
-                <text font-size='9px' x="8" y="3">Voto a contra</text>
-                <text font-size='9px' font-weight="bold" x="70" y="4">{no}</text>
+                <text className={s.legendText} x="8" y="3">Voto a contra</text>
+                <text className={cx(s.legendText, s.legendNumber)} font-weight="bold" x="70" y="4">{no}</text>
               </g>
               <g transform="translate(0, 30)">
                 <circle className={cx(s.circle, s['NoEstaba'])} fill="#ccc" r="5" />
-                <text font-size='9px' x="8" y="3">No estaba</text>
-                <text font-size='9px' font-weight="bold" x="70" y="4">{noEstaba}</text>
+                <text className={s.legendText} x="8" y="3">No estaba</text>
+                <text className={cx(s.legendText, s.legendNumber)} font-weight="bold" x="70" y="4">{noEstaba}</text>
               </g>
             </g>
             {balloon}
@@ -278,6 +278,7 @@ export default class Base extends Component {
             </div>
           </div>
         </div>
+        <div className={s.instructions}>Instrucciones: clickee en la línea de abajo por proyecto, para mirar el comportamiento de cada senador.</div>
         <div className={s.description}>
           <header className={s.description__header}>
             <h3>{momentDescription.title}</h3>

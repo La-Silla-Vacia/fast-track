@@ -150,11 +150,13 @@
     time {
       margin-right: 0.5em;
       display: inline-block;
+      margin-top: 0;
+      padding-top: 0;
     }
   }
 
   & p {
-    font-size: .8em;
+    font-size: 1em !important;
   }
 }
 
@@ -165,7 +167,7 @@
 .rangeContainer {
   position: relative;
   max-width: 39em;
-  margin: 0 auto;
+  margin: 2em auto 1em;
 
   & .overlay {
     position: absolute;
@@ -319,4 +321,29 @@
   height: 1em;
   display: inline-block;
   border-radius: 50%;
+}
+
+.legend {
+  transform: translate(140px, 145px);
+
+  @media only screen and (max-width: 520px) {
+    transform: translate(124px, 145px);
+  }
+}
+.legendText {
+  font-size: 9px;
+
+  @media only screen and (max-width: 520px) {
+    font-size: 14px;
+  }
+}
+
+.legendNumber {
+  transform: translateX(26px);
+  font-weight: bold;
+}
+
+.instructions {
+  font-size: .8em;
+  font-style: italic;
 }
