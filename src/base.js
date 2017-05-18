@@ -64,7 +64,8 @@ export default class Base extends Component {
           "date": "26 04 2017",
           "description": "<p>Consigna la creación, condiciones y beneficios de la organización política a la que llegarán las Farc cuando dejen las armas y da 10 curules en el Congreso por dos periodos a ese partido.</p>"
         }
-      ]
+      ],
+      partidos: []
     };
 
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
@@ -99,7 +100,7 @@ export default class Base extends Component {
   }
 
   fetchData(uri) {
-    const { moments } = this.state;
+    const { moments, partidos } = this.state;
     fetch(uri)
       .then((response) => {
         console.log(response.json);
@@ -126,8 +127,12 @@ export default class Base extends Component {
           }
           momentsResults[index].total++;
         });
+        if (partidos.indexOf(item.partido) === -1) {
+          partidos.push(item.partido)
+        }
       });
-      this.setState({ data: json, momentsResults });
+      console.log(partidos);
+      this.setState({ data: json, momentsResults, partidos });
     }).catch((ex) => {
       console.log('parsing failed', ex)
     })
@@ -173,10 +178,6 @@ export default class Base extends Component {
             partido={person.partido}
             r="6.67"
           />
-          {/*<circle*/}
-          {/*className={cx(s.marker, s[siONo.replace(/\s/g, '')])}*/}
-          {/*r="3"*/}
-          {/*/>*/}
         </g>
       )
     });
@@ -208,6 +209,16 @@ export default class Base extends Component {
     this.setState({ moment: event.target.value });
   }
 
+  getPartidos() {
+    const { partidos } = this.state;
+
+    return partidos.map((partido, index) => {
+      return (
+        <li partido={partido}><span className={cx(s.circle, s.partido)} partido={partido} /> {partido}</li>
+      )
+    });
+  }
+
   render(props, state) {
     const { moment, momentsData, momentsResults } = state;
     const momentDescription = momentsData[moment];
@@ -218,6 +229,8 @@ export default class Base extends Component {
 
     const names = this.getNames();
     const balloon = this.getBalloon();
+    const partidos = this.getPartidos();
+
     return (
       <div className={s.container}>
         <div className={s.description}>
@@ -226,27 +239,28 @@ export default class Base extends Component {
             <time>{momentDescription.date}</time>
             <div dangerouslySetInnerHTML={{ __html: momentDescription.description }} />
           </div>
-          <div>
-            <ul className={s.legend}>
-              <li>
-                <span className={cx(s.legend__item, s.Si)} /> Voto a favor <span
-                className={cx(s.legend__result, s.Si)}>{si}</span>
-              </li>
-              <li>
-                <span className={cx(s.legend__item, s.No)} /> Voto a contra <span
-                className={cx(s.legend__result, s.No)}>{no}</span>
-              </li>
-              <li>
-                <span className={cx(s.legend__item, s.NoEstaba)} /> No estaba <span
-                className={cx(s.legend__result, s.NoEstaba)}>{noEstaba}</span>
-              </li>
-            </ul>
-          </div>
         </div>
         <div className={s.graphic}>
           <svg viewBox="0 0 360 185" className={s.svg}>
             <g>
               {names}
+            </g>
+            <g transform="translate(140, 145)">
+              <g>
+                <circle className={cx(s.circle, s['Sí'])} fill="#fff" r="4" />
+                <text font-size='9px' x="8" y="3">Voto a favor</text>
+                <text font-size='9px' font-weight="bold" x="70" y="4">{si}</text>
+              </g>
+              <g transform="translate(0, 15)">
+                <circle className={cx(s.circle, s['No'])} fill="#fff" r="4" />
+                <text font-size='9px' x="8" y="3">Voto a contra</text>
+                <text font-size='9px' font-weight="bold" x="70" y="4">{no}</text>
+              </g>
+              <g transform="translate(0, 30)">
+                <circle className={cx(s.circle, s['NoEstaba'])} fill="#ccc" r="5" />
+                <text font-size='9px' x="8" y="3">No estaba</text>
+                <text font-size='9px' font-weight="bold" x="70" y="4">{noEstaba}</text>
+              </g>
             </g>
             {balloon}
           </svg>
@@ -268,6 +282,10 @@ export default class Base extends Component {
               <span className={s.point} />
             </div>
           </div>
+
+          <ul className={s.conventions}>
+            {partidos}
+          </ul>
         </div>
         <div className="clearfix" />
       </div>
