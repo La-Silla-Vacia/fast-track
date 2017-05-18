@@ -1,8 +1,9 @@
 .container {
   font-family: map(fonts, family-sans);
   font-size: 16px;
-  display: block;
+  display: flex;
   position: relative;
+  margin-top: 3em;
 }
 
 .circle {
@@ -50,16 +51,35 @@
 
   &.Sí,
   &.No {
-    stroke: green;
+    stroke: #80DC17;
     stroke-width: 2px;
   }
 
   &.No {
-    stroke: red;
+    stroke: #FF0000;
   }
 
   &.Noestaba {
     opacity: .15;
+  }
+}
+
+.marker {
+  transition: fill .4s;
+  stroke: #000;
+  stroke-width: 0.5px;
+  pointer-events: none;
+
+  &.Sí {
+    fill: #80DC17;
+  }
+
+  &.No {
+    fill: #FF0000;
+  }
+
+  &.Noestaba {
+    opacity: 0;
   }
 }
 
@@ -91,4 +111,165 @@
   stroke: black;
   stroke-width: 0.5px;
   pointer-events: none;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  background: transparent;
+  border: 0;
+  transform: rotate(45deg);
+  padding: 0;
+  margin-top: 1.5em;
+}
+
+.description {
+  max-width: 20em;
+  float: left;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  & p {
+    font-size: .8em;
+  }
+}
+
+.graphic {
+  width: calc(100% - 20em);
+  float: right;
+}
+
+[type='range'] {
+  -webkit-appearance: none;
+  margin: 15px 0;
+  width: 100%;
+}
+
+[type='range']:focus {
+  outline: 0;
+}
+
+[type='range']:focus::-webkit-slider-runnable-track {
+  background: map(colors, secondary, light);
+}
+
+[type='range']:focus::-ms-fill-lower {
+  background: map(colors, secondary, light);
+}
+
+[type='range']:focus::-ms-fill-upper {
+  background: map(colors, secondary, light);
+}
+
+[type='range']::-webkit-slider-runnable-track {
+  cursor: pointer;
+  height: 12px;
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+  width: 100%;
+  background: map(colors, secondary, light);
+  border: 0 solid transparent;
+  border-radius: 5px;
+}
+
+[type='range']::-webkit-slider-thumb {
+  background: map(colors, primary, base);
+  border: 2px solid white;
+  border-radius: 30px;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  -webkit-appearance: none;
+  margin-top: -9px;
+}
+
+[type='range']::-moz-range-track {
+  cursor: pointer;
+  height: 12px;
+  transition: all .2s ease;
+  width: 100%;
+  background: map(colors, secondary, light);
+  border: 0 solid transparent;
+  border-radius: 5px;
+}
+
+[type='range']::-moz-range-thumb {
+  background: map(colors, primary, base);
+  border: 2px solid white;
+  border-radius: 30px;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+}
+
+[type='range']::-ms-track {
+  cursor: pointer;
+  height: 12px;
+  transition: all .2s ease;
+  width: 100%;
+  background: transparent;
+  border-color: transparent;
+  border-width: 15px 0;
+  color: transparent;
+}
+
+[type='range']::-ms-fill-lower {
+  background: map(colors, secondary, light);
+  border: 0 solid transparent;
+  border-radius: 10px;
+}
+
+[type='range']::-ms-fill-upper {
+  background: map(colors, secondary, light);
+  border: 0 solid transparent;
+  border-radius: 10px;
+}
+
+[type='range']::-ms-thumb {
+  background: map(colors, primary, base);
+  border: 2px solid white;
+  border-radius: 30px;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  margin-top: 0;
+}
+
+.legend {
+  list-style: none;
+  padding: 0;
+
+  & li {
+    display: flex;
+    align-items: center;
+  }
+
+  & span {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    border: 2px solid;
+    margin-right: 0.5em;
+
+    &.Si {
+      border-color: #80DC17;
+    }
+
+    &.No {
+      border-color: #FF0000;
+    }
+
+    &.NoEstaba {
+      border: 0;
+      background-color: map(colors, primary, base);
+      opacity: 0.15;
+    }
+  }
 }

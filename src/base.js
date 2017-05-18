@@ -17,10 +17,57 @@ export default class Base extends Component {
         x: false,
         y: false
       },
-      moment: 'amnistia28_12_2016'
+      moment: 0,
+      moments: [
+        'amnistia28_12_2016',
+        'vocesDePaz14_02_2017',
+        'blindaje21_02_2017',
+        'jEP13_03_2017',
+        'conciliacionJep22_03_2017',
+        'oposicion05_04_2017',
+        'partidoPoliticoFarc26_04_2017'
+      ],
+      momentsData: [
+        {
+          "title": "Amnistía",
+          "date": "28 12 2016",
+          "description": "<p>Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amet fermentum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Sed posuere consectetur est at lobortis.</p>"
+        },
+        {
+          "title": "Voces de paz",
+          "date": "14 02 2017",
+          "description": "<p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras mattis consectetur purus sit amet fermentum. Nulla vitae elit libero, a pharetra augue. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus.</p>"
+        },
+        {
+          "title": "Blindaje",
+          "date": "21 02 2017",
+          "description": "<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Donec id elit non mi porta gravida at eget metus. Donec id elit non mi porta gravida at eget metus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>"
+        },
+        {
+          "title": "JEP",
+          "date": "13 03 2017",
+          "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum id ligula porta felis euismod semper. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>"
+        },
+        {
+          "title": "Conciliacion Jep",
+          "date": "22 03 2017",
+          "description": "<p>Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget metus.</p>"
+        },
+        {
+          "title": "Oposicion",
+          "date": "05 04 2017",
+          "description": "<p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>"
+        },
+        {
+          "title": "Partido Politico Farc",
+          "date": "26 04 2017",
+          "description": "<p>Donec sed odio dui. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>"
+        }
+      ]
     };
 
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   componentWillMount() {
@@ -82,24 +129,29 @@ export default class Base extends Component {
   }
 
   getNames() {
-    const { data, moment } = this.state;
+    const { data, moment, moments } = this.state;
     return data.map((person, index) => {
       const seat = seating[index];
       if (!seat) {
         console.log(person);
         return;
       }
-      const siONo = person[moment];
+      const currentMoment = moments[moment];
+      const siONo = person[currentMoment];
       const { x, y } = seat;
       return (
         <g transform={`translate(${x}, ${y})`}>
           <circle
-            className={cx(s.circle, s[siONo.replace(/\s/g,'')])}
+            className={cx(s.circle, s[siONo.replace(/\s/g, '')])}
             onMouseEnter={this.handleMouseEnter.bind(this, person.senador, x, y)}
             onMouseLeave={this.handleMouseLeave}
             partido={person.partido}
             r="6.67"
           />
+          {/*<circle*/}
+          {/*className={cx(s.marker, s[siONo.replace(/\s/g, '')])}*/}
+          {/*r="3"*/}
+          {/*/>*/}
         </g>
       )
     });
@@ -107,8 +159,9 @@ export default class Base extends Component {
 
   getBalloon() {
     const { balloon } = this.state;
-    const { text, x = 50, y = 50 } = balloon;
-
+    let { text, x = 50, y = 50 } = balloon;
+    x = (x) ? x : 0;
+    y = (y) ? y : 0;
     const hidden = (!text);
 
     return (
@@ -126,41 +179,54 @@ export default class Base extends Component {
     this.setState({ moment });
   }
 
+  handleInputChange(event) {
+    this.setState({ moment: event.target.value });
+  }
+
   render(props, state) {
+    const { moment, momentsData } = state;
+    const momentDescription = momentsData[moment];
+
     const names = this.getNames();
     const balloon = this.getBalloon();
     return (
       <div className={s.container}>
-        <svg viewBox="0 0 360 185" className={s.svg}>
-          <g>
-            {names}
-          </g>
-          {balloon}
-        </svg>
-
-        <div className={s.buttons}>
-          <button onClick={this.handleChange.bind(this, 'amnistia28_12_2016')}>
-            Amnistía 28_12_2016
-          </button>
-          <button onClick={this.handleChange.bind(this, 'vocesDePaz14_02_2017')}>
-            Voces de paz 14_02_2017
-          </button>
-          <button onClick={this.handleChange.bind(this, 'blindaje21_02_2017')}>
-            Blindaje 21_02_2017
-          </button>
-          <button onClick={this.handleChange.bind(this, 'jEP13_03_2017')}>
-            JEP 13_03_2017
-          </button>
-          <button onClick={this.handleChange.bind(this, 'conciliacionJep22_03_2017')}>
-            Conciliación jep 22_03_2017
-          </button>
-          <button onClick={this.handleChange.bind(this, 'oposicion05_04_2017')}>
-            Oposición 05_04_2017
-          </button>
-          <button onClick={this.handleChange.bind(this, 'partidoPoliticoFarc26_04_2017')}>
-            Partido político farc 26_04_2017
-          </button>
+        <div className={s.description}>
+          <div>
+            <h3>{momentDescription.title}</h3>
+            <time>{momentDescription.date}</time>
+            <div dangerouslySetInnerHTML={{ __html: momentDescription.description }} />
+          </div>
+          <div>
+            <ul className={s.legend}>
+              <li>
+                <span className={s.Si} /> Voto a favor
+              </li>
+              <li>
+                <span className={s.No} /> Voto a contra
+              </li>
+              <li>
+                <span className={s.NoEstaba} /> No estaba
+              </li>
+            </ul>
+          </div>
         </div>
+        <div className={s.graphic}>
+          <svg viewBox="0 0 360 185" className={s.svg}>
+            <g>
+              {names}
+            </g>
+            {balloon}
+          </svg>
+
+          <input
+            type="range"
+            min="0" max="6"
+            value={moment}
+            onChange={this.handleInputChange}
+          />
+        </div>
+        <div className="clearfix" />
       </div>
     )
   }
