@@ -261,17 +261,17 @@ export default class Base extends Component {
               <g>
                 <circle className={cx(s.circle, s['Sí'])} fill="#fff" r="4" />
                 <text className={s.legendText} x="8" y="3">Voto a favor</text>
-                <text className={cx(s.legendText, s.legendNumber)} font-weight="bold" x="70" y="4">{si}</text>
+                <text className={cx(s.legendText, s.legendNumber)} x="70" y="4">{si}</text>
               </g>
               <g transform="translate(0, 15)">
                 <circle className={cx(s.circle, s['No'])} fill="#fff" r="4" />
-                <text className={s.legendText} x="8" y="3">Voto a contra</text>
-                <text className={cx(s.legendText, s.legendNumber)} font-weight="bold" x="70" y="4">{no}</text>
+                <text className={s.legendText} x="8" y="3">Voto en contra</text>
+                <text className={cx(s.legendText, s.legendNumber)} x="70" y="4">{no}</text>
               </g>
               <g transform="translate(0, 30)">
                 <circle className={cx(s.circle, s['NoEstaba'])} fill="#ccc" r="5" />
                 <text className={s.legendText} x="8" y="3">No estaba</text>
-                <text className={cx(s.legendText, s.legendNumber)} font-weight="bold" x="70" y="4">{noEstaba}</text>
+                <text className={cx(s.legendText, s.legendNumber)} x="70" y="4">{noEstaba}</text>
               </g>
             </g>
             {balloon}
