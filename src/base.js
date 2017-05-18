@@ -278,7 +278,7 @@ export default class Base extends Component {
             </div>
           </div>
         </div>
-        <div className={s.instructions}>Instrucciones: clickee en la línea de abajo por proyecto, para mirar el comportamiento de cada senador.</div>
+        <div className={s.instructions}>Instrucciones: Arrastre la bola a través de la línea de tiempo para mirar el comportamiento de cada senador.</div>
         <div className={s.description}>
           <header className={s.description__header}>
             <h3>{momentDescription.title}</h3>
