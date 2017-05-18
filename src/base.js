@@ -131,7 +131,6 @@ export default class Base extends Component {
           partidos.push(item.partido)
         }
       });
-      console.log(partidos);
       this.setState({ data: json, momentsResults, partidos });
     }).catch((ex) => {
       console.log('parsing failed', ex)
@@ -212,7 +211,7 @@ export default class Base extends Component {
   getPartidos() {
     const { partidos } = this.state;
 
-    return partidos.map((partido, index) => {
+    return partidos.map((partido) => {
       return (
         <li partido={partido}><span className={cx(s.circle, s.partido)} partido={partido} /> {partido}</li>
       )
@@ -233,13 +232,9 @@ export default class Base extends Component {
 
     return (
       <div className={s.container}>
-        <div className={s.description}>
-          <div>
-            <h3>{momentDescription.title}</h3>
-            <time>{momentDescription.date}</time>
-            <div dangerouslySetInnerHTML={{ __html: momentDescription.description }} />
-          </div>
-        </div>
+        <ul className={s.conventions}>
+          {partidos}
+        </ul>
         <div className={s.graphic}>
           <svg viewBox="0 0 360 185" className={s.svg}>
             <g>
@@ -282,10 +277,13 @@ export default class Base extends Component {
               <span className={s.point} />
             </div>
           </div>
-
-          <ul className={s.conventions}>
-            {partidos}
-          </ul>
+        </div>
+        <div className={s.description}>
+          <header className={s.description__header}>
+            <h3>{momentDescription.title}</h3>
+            <time>{momentDescription.date}</time>
+          </header>
+          <div dangerouslySetInnerHTML={{ __html: momentDescription.description }} />
         </div>
         <div className="clearfix" />
       </div>

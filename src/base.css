@@ -1,7 +1,7 @@
 .container {
   font-family: map(fonts, family-sans);
   font-size: 16px;
-  display: flex;
+  display: block;
   position: relative;
   margin-top: 3em;
 }
@@ -95,6 +95,9 @@
 
 .svg {
   overflow: visible !important;
+  max-width: 40em;
+  margin: 0 auto;
+  display: block;
 }
 
 .balloon {
@@ -111,7 +114,7 @@
 
   &__text {
     fill: #fff;
-    font-size: 5px;
+    font-size: 7px;
   }
 
 }
@@ -138,12 +141,17 @@
 }
 
 .description {
-  max-width: 21em;
-  float: left;
+  max-width: 40em;
+  margin: 2em auto;
   min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+
+  &__header {
+    h3,
+    time {
+      margin-right: 0.5em;
+      display: inline-block;
+    }
+  }
 
   & p {
     font-size: .8em;
@@ -151,12 +159,13 @@
 }
 
 .graphic {
-  width: calc(100% - 20em);
-  float: right;
+  width: 100%;
 }
 
 .rangeContainer {
   position: relative;
+  max-width: 39em;
+  margin: 0 auto;
 
   & .overlay {
     position: absolute;
@@ -292,9 +301,16 @@
 .conventions {
   list-style: none;
   padding: 0;
+  font-size: .9em;
+  position: absolute;
 
-  & li {
-    display: inline-block;
+  @media screen and (max-width: 992px) {
+    column-count: 2;
+    position: relative;
+  }
+
+  & span {
+    margin-right: 0.5em;
   }
 }
 
