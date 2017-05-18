@@ -31,8 +31,8 @@ To embed on a webpage use this code:
 ```html
 <!-- START OF OUR INTERACTIVE -->
 <script type="text/javascript">
-window.fast-track_data = {
-  "name": "fast-track"
+window.fast_track_data = {
+  "dataUri": "https://lsv-data-visualizations.firebaseio.com/fast-track.json"
 }
 </script>
 <div class="lsv-interactive" id="fast-track">
